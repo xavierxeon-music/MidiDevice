@@ -58,11 +58,11 @@ void Midi::RtMidi::Input::controllerChange(const Channel& channel, const Control
    {
       docBufferMap[channel].clear();
    }
-   else if (controllerMessage == Midi::ControllerMessage::DataInit)
+   else if (controllerMessage == Midi::ControllerMessage::DataBlock)
    {
       docBufferMap[channel].push_back(value);
    }
-   else if (controllerMessage == Midi::ControllerMessage::DataInit)
+   else if (controllerMessage == Midi::ControllerMessage::DataApply)
    {
       const Bytes bytes = SevenBit::decode(docBufferMap[channel]);
       QByteArray content(bytes.size(), '\0');

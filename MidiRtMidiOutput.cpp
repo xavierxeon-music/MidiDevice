@@ -33,7 +33,7 @@ QStringList Midi::RtMidi::Output::getAvailable()
    return deviceList;
 }
 
-void Midi::RtMidi::Output::sendDocument(const QJsonObject& object, const Channel& channel, const uint8_t docIndex)
+void Midi::RtMidi::Output::sendDocument(const Channel& channel, const QJsonObject& object, const uint8_t docIndex)
 {
    sendControllerChange(channel, Midi::ControllerMessage::DataInit, docIndex);
 
