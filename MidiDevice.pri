@@ -23,7 +23,6 @@ INCLUDEPATH += $$PWD/Include
 HEADERS += \
    $$PWD/Include/Midi/MidiPhysicalInput.h \
    $$PWD/Include/Midi/MidiPhysicalOutput.h \
-   $$PWD/Include/Midi/MidiToolBridge.h \
    $$PWD/Include/Midi/MidiTunnelClient.h \
    $$PWD/Include/Midi/MidiTunnelServer.h \
    $$PWD/Include/Midi/MidiVirtualInput.h \
@@ -41,7 +40,6 @@ SOURCES += \
    $$PWD/MidiRtMidiBase.cpp \
    $$PWD/MidiRtMidiInput.cpp \
    $$PWD/MidiRtMidiOutput.cpp \
-   $$PWD/MidiToolBridge.cpp \
    $$PWD/MidiTunnelClient.cpp \
    $$PWD/MidiTunnelServer.cpp \
    $$PWD/MidiTunnelSocket.cpp \

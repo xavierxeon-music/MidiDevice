@@ -3,8 +3,11 @@
 #include <QDebug>
 #include <QThread>
 
-Midi::RtMidi::Output::Output(QObject* parent, const QString& portName)
-   : Base(parent, portName)
+#include <JSONTools.h>
+#include <Tools/SevenBit.h>
+
+Midi::RtMidi::Output::Output(const QString& portName)
+   : Base(portName)
    , Interface::Output()
    , output()
 {
@@ -30,6 +33,20 @@ QStringList Midi::RtMidi::Output::getAvailable()
    return deviceList;
 }
 
+void Midi::RtMidi::Output::sendDocument(const QJsonObject& object, const Channel& channel, const uint8_t docIndex)
+{
+   sendControllerChange(channel, Midi::ControllerMessage::DataInit, docIndex);
+
+   const QByteArray content = JSONTools::Helper::convert(object);
+   Bytes bytes(content.size());
+   std::memcpy(bytes.data(), content.constData(), content.size());
+
+   const std::string data = SevenBit::encode(bytes);
+   for (const char& byte : data)
+      sendControllerChange(channel, Midi::ControllerMessage::DataBlock, byte);
+
+   sendControllerChange(channel, Midi::ControllerMessage::DataApply, docIndex);
+}
 
 void Midi::RtMidi::Output::sendBuffer(const Bytes& buffer)
 {

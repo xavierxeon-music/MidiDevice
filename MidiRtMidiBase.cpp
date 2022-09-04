@@ -65,9 +65,8 @@ Midi::RtMidi::PortName::Map Midi::RtMidi::PortName::generate()
 
 // base
 
-Midi::RtMidi::Base::Base(QObject* parent, const QString &portName)
-   : QObject(parent)
-   , portName(PortName::makeRaw(portName))
+Midi::RtMidi::Base::Base(const QString& portName)
+   : portName(PortName::makeRaw(portName))
 {
 }
 

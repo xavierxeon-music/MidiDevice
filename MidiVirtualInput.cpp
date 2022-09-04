@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-Midi::Virtual::Input::Input(QObject* parent, const QString& portName)
-   : RtMidi::Input(parent, portName)
+Midi::Virtual::Input::Input(const QString& portName)
+   : RtMidi::Input(portName)
    , isOpen(false)
 {
 }

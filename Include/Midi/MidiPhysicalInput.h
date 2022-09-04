@@ -10,9 +10,8 @@ namespace Midi
       // connect to an existing input
       class Input : public RtMidi::Input
       {
-         Q_OBJECT
       public:
-         Input(QObject* parent, const QString& portName);
+         Input(const QString& portName);
          virtual ~Input() override;
 
       public:

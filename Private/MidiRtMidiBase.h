@@ -29,11 +29,10 @@ namespace Midi
          static Map nameMap;
       };
 
-      class Base : public QObject
+      class Base
       {
-         Q_OBJECT
       public:
-         Base(QObject* parent, const QString& portName);
+         Base(const QString& portName);
 
       protected:
          static void midiError(RtMidiError::Type type, const std::string& errorText, void* userData);

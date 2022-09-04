@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-Midi::Virtual::Output::Output(QObject* parent, const QString& portName)
-   : RtMidi::Output(parent, portName)
+Midi::Virtual::Output::Output(const QString& portName)
+   : RtMidi::Output(portName)
 {
 }
 

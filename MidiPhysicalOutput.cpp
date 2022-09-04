@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-Midi::Physical::Output::Output(QObject* parent, const QString& portName)
-   : RtMidi::Output(parent, portName)
+Midi::Physical::Output::Output(const QString& portName)
+   : RtMidi::Output(portName)
 {
 }
 

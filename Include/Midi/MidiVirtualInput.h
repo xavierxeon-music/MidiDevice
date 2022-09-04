@@ -10,9 +10,8 @@ namespace Midi
       // creates a virtual midi input
       class Input : public RtMidi::Input
       {
-         Q_OBJECT
       public:
-         Input(QObject* parent, const QString& portName);
+         Input(const QString& portName);
          virtual ~Input();
 
       public:

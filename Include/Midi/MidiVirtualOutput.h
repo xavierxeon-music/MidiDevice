@@ -10,9 +10,8 @@ namespace Midi
       // creates a virtual midi output
       class Output : public RtMidi::Output
       {
-         Q_OBJECT
       public:
-         Output(QObject* parent, const QString& portName);
+         Output(const QString& portName);
          virtual ~Output();
 
       public:
