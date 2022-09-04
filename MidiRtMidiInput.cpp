@@ -28,6 +28,9 @@ Midi::RtMidi::Input::Input(const QString& portName)
    , relay(this)
    , docBufferMap()
 {
+   input.setErrorCallback(&RtMidi::Input::midiError);
+   input.setCallback(&RtMidi::Input::midiReceive, this);
+   input.ignoreTypes(false, false, false); // do not ignore anything
 }
 
 Midi::RtMidi::Input::~Input()

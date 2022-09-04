@@ -20,10 +20,6 @@ void Midi::Virtual::Input::open()
 
    input.openVirtualPort(portName.toStdString());
 
-   input.setErrorCallback(&RtMidi::Input::midiError);
-   input.setCallback(&RtMidi::Input::midiReceive, this);
-   input.ignoreTypes(false, false, false); // do not ignore anything
-
    qInfo() << "opened virtual midi input " << portName;
    isOpen = true;
 }

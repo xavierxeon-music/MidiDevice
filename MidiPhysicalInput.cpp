@@ -31,9 +31,6 @@ void Midi::Physical::Input::open()
    {
       input.openPort(portNumber);
 
-      input.setErrorCallback(&RtMidi::Input::midiError);
-      input.setCallback(&RtMidi::Input::midiReceive, this);
-      input.ignoreTypes(false, false, false); // do not ignore anything
 
       qInfo() << "opened midi input port" << portNumber;
    }
