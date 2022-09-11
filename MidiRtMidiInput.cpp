@@ -27,6 +27,7 @@ Midi::RtMidi::Input::Input(const QString& portName)
    , input()
    , relay(this)
    , docBufferMap()
+   , documentFunctionList()
 {
    input.setErrorCallback(&RtMidi::Input::midiError);
    input.setCallback(&RtMidi::Input::midiReceive, this);
@@ -78,10 +79,8 @@ void Midi::RtMidi::Input::controllerChange(const Channel& channel, const Control
 
 void Midi::RtMidi::Input::document(const Channel& channel, const QJsonObject& object, const uint8_t docIndex)
 {
-   Q_UNUSED(channel)
-   Q_UNUSED(object)
-   Q_UNUSED(docIndex)
-   // do nothing
+   for (const DocumentFunction& documentFunction : documentFunctionList)
+      documentFunction(channel, object, docIndex);
 }
 
 void Midi::RtMidi::Input::midiReceive(double timeStamp, std::vector<unsigned char>* message, void* userData)

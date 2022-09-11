@@ -28,6 +28,9 @@ namespace Midi
       class Input : public Base, public Interface::Input
       {
       public:
+         using DocumentFunction = std::function<void(const Channel& channel, const QJsonObject& object, const uint8_t docIndex)>;
+
+      public:
          Input(const QString& portName);
          virtual ~Input() = 0;
 
@@ -36,6 +39,9 @@ namespace Midi
          virtual void close() override = 0;
          static QStringList getAvailable();
          virtual void controllerChange(const Channel& channel, const ControllerMessage& controllerMessage, const uint8_t& value) override;
+
+         template <typename ClassType>
+         void onDocument(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const QJsonObject&, const uint8_t));
          virtual void document(const Channel& channel, const QJsonObject& object, const uint8_t docIndex);
 
       protected:
@@ -54,9 +60,17 @@ namespace Midi
       private:
          Relay relay;
          BufferMap docBufferMap;
+         std::vector<DocumentFunction> documentFunctionList;
       };
 
    } // namespace RtMidi
 } // namespace Midi
+
+template <typename ClassType>
+void Midi::RtMidi::Input::onDocument(ClassType* instance, void (ClassType::*functionPointer)(const Channel&, const QJsonObject&, const uint8_t))
+{
+   DocumentFunction documentFunction = std::bind(functionPointer, instance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+   documentFunctionList.push_back(documentFunction);
+}
 
 #endif // NOT MidiRtMidiInputH
