@@ -16,7 +16,10 @@ Midi::Virtual::Input::~Input()
 void Midi::Virtual::Input::open()
 {
    if (isOpen)
+   {
+      qDebug() << "virtual midi input " << portName << "already open";
       return;
+   }
 
    input.openVirtualPort(portName.toStdString());
 

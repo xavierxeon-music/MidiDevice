@@ -4,6 +4,7 @@
 
 Midi::Virtual::Output::Output(const QString& portName)
    : RtMidi::Output(portName)
+   , isOpen(false)
 {
 }
 
@@ -15,7 +16,10 @@ Midi::Virtual::Output::~Output()
 void Midi::Virtual::Output::open()
 {
    if (isOpen)
+   {
+      qDebug() << "virtual midi output " << portName << "already open";
       return;
+   }
 
    output.openVirtualPort(portName.toStdString());
    output.setErrorCallback(&Virtual::Output::midiError);
