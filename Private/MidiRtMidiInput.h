@@ -37,6 +37,8 @@ namespace Midi
       public:
          virtual void open() override = 0;
          virtual void close() override = 0;
+         virtual bool isOpen() const override = 0;
+
          static QStringList getAvailable();
          virtual void controllerChange(const Channel& channel, const ControllerMessage& controllerMessage, const uint8_t& value) override;
 

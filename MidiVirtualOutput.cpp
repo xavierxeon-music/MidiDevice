@@ -4,18 +4,18 @@
 
 Midi::Virtual::Output::Output(const QString& portName)
    : RtMidi::Output(portName)
-   , isOpen(false)
+   , isOpened(false)
 {
 }
 
 Midi::Virtual::Output::~Output()
 {
-   Virtual::Output::close();
+   Virtual::Output::close(); // need full name space in destructor
 }
 
 void Midi::Virtual::Output::open()
 {
-   if (isOpen)
+   if (isOpened)
    {
       qDebug() << "virtual midi output " << portName << "already open";
       return;
@@ -25,17 +25,21 @@ void Midi::Virtual::Output::open()
    output.setErrorCallback(&Virtual::Output::midiError);
 
    qInfo() << "opened virtual midi output " << portName;
-   isOpen = true;
+   isOpened = true;
 }
 
 void Midi::Virtual::Output::close()
 {
-   if (!isOpen)
+   if (!isOpened)
       return;
 
    output.closePort();
    qInfo() << "closed virtual midi output" << portName;
 
-   isOpen = false;
+   isOpened = false;
 }
 
+bool Midi::Virtual::Output::isOpen() const
+{
+   return isOpened;
+}

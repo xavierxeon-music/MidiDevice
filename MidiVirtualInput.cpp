@@ -4,18 +4,18 @@
 
 Midi::Virtual::Input::Input(const QString& portName)
    : RtMidi::Input(portName)
-   , isOpen(false)
+   , isOpened(false)
 {
 }
 
 Midi::Virtual::Input::~Input()
 {
-   Virtual::Input::close();
+   Virtual::Input::close(); // need full class name in destructor
 }
 
 void Midi::Virtual::Input::open()
 {
-   if (isOpen)
+   if (isOpened)
    {
       qDebug() << "virtual midi input " << portName << "already open";
       return;
@@ -24,17 +24,21 @@ void Midi::Virtual::Input::open()
    input.openVirtualPort(portName.toStdString());
 
    qInfo() << "opened virtual midi input " << portName;
-   isOpen = true;
+   isOpened = true;
 }
 
 void Midi::Virtual::Input::close()
 {
-   if (!isOpen)
+   if (!isOpened)
       return;
 
    input.closePort();
    qInfo() << "closed virtual midi input" << portName;
 
-   isOpen = false;
+   isOpened = false;
 }
 
+bool Midi::Virtual::Input::isOpen() const
+{
+   return isOpened;
+}

@@ -19,6 +19,8 @@ namespace Midi
       public:
          virtual void open() override = 0;
          virtual void close() override = 0;
+         virtual bool isOpen() const override = 0;
+
          static QStringList getAvailable();
          void sendDocument(const Channel& channel, const QJsonObject& object, const uint8_t docIndex = 0);
          void sendBuffer(const Bytes& buffer) override;

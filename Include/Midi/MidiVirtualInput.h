@@ -17,9 +17,10 @@ namespace Midi
       public:
          void open() override;
          void close() override;
+         bool isOpen() const override;
 
       private:
-         bool isOpen;
+         bool isOpened;
       };
    } // namespace Virtual
 } // namespace Midi
