@@ -14,9 +14,9 @@ Midi::RtMidi::Relay::Relay(Input* input)
 {
 }
 
-void Midi::RtMidi::Relay::dataFromInput(const Bytes& message)
+void Midi::RtMidi::Relay::prcocess(const Bytes& message)
 {
-   input->dataFromInput(message);
+   input->prcocessMessage(message);
 }
 
 // input
@@ -120,10 +120,10 @@ void Midi::RtMidi::Input::midiReceive(double timeStamp, std::vector<unsigned cha
    maybeProcessBuffer();
 }
 
-void Midi::RtMidi::Input::dataFromInput(const Bytes& message)
+void Midi::RtMidi::Input::prcocessMessage(const Bytes& message)
 {
    for (Interface::Output* passthrough : passthroughList)
       passthrough->sendBuffer(message);
 
-   Interface::Input::dataFromInput(message);
+   Interface::Input::prcocessMessage(message);
 }

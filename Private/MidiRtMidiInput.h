@@ -19,7 +19,7 @@ namespace Midi
          Relay(Input* input);
 
       public:
-         Q_INVOKABLE void dataFromInput(const Bytes& message);
+         Q_INVOKABLE void prcocess(const Bytes& message);
 
       private:
          Input* input;
@@ -57,7 +57,7 @@ namespace Midi
          using BufferMap = std::map<Channel, std::string>;
 
       private:
-         void dataFromInput(const Bytes& message) override;
+         void prcocessMessage(const Bytes& message) override;
 
       private:
          Relay relay;

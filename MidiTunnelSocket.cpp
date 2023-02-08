@@ -56,7 +56,7 @@ void Midi::Tunnel::Socket::slotIncomingData()
       Bytes message(messageSize);
       std::memcpy(&message[0], messageData.constData(), messageSize);
 
-      dataFromInput(message);
+      prcocessMessage(message);
    }
 }
 
