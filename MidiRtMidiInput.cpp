@@ -1,6 +1,7 @@
 #include "Private/MidiRtMidiInput.h"
 
 #include <QDebug>
+#include <QMetaMethod>
 
 #include <JSONTools.h>
 #include <Midi/MidiInterfaceOutput.h>
@@ -97,13 +98,17 @@ void Midi::RtMidi::Input::midiReceive(double timeStamp, std::vector<unsigned cha
    static int once = qRegisterMetaType<Bytes>("Bytes");
    Q_UNUSED(once);
 
+   static const int processMessageIndex = Relay::staticMetaObject.indexOfMethod("prcocessMessage");
+   static QMetaMethod processMessage = Relay::staticMetaObject.method(processMessageIndex);
+
    static Bytes buffer;
    auto maybeProcessBuffer = [&]()
    {
       if (0 == buffer.size())
          return;
 
-      Relay::staticMetaObject.invokeMethod(&me->relay, "dataFromInput", Qt::QueuedConnection, Q_ARG(Bytes, buffer));
+      if (processMessage.isConst())
+         processMessage.invoke(&me->relay, Qt::QueuedConnection, Q_ARG(Bytes, buffer));
 
       buffer.clear();
    };
