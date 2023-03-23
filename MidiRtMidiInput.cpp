@@ -15,9 +15,9 @@ Midi::RtMidi::Relay::Relay(Input* input)
 {
 }
 
-void Midi::RtMidi::Relay::prcocess(const Bytes& message)
+void Midi::RtMidi::Relay::processMessage(const Bytes& message)
 {
-   input->prcocessMessage(message);
+   input->processMessage(message);
 }
 
 // input
@@ -98,8 +98,14 @@ void Midi::RtMidi::Input::midiReceive(double timeStamp, std::vector<unsigned cha
    static int once = qRegisterMetaType<Bytes>("Bytes");
    Q_UNUSED(once);
 
-   static const int processMessageIndex = Relay::staticMetaObject.indexOfMethod("prcocessMessage");
-   static QMetaMethod processMessage = Relay::staticMetaObject.method(processMessageIndex);
+   static QMetaMethod processMessage = [&]()
+   {
+      const int processMessageIndex = Relay::staticMetaObject.indexOfMethod("processMessage(Bytes)");
+      Q_ASSERT(processMessageIndex != -1);
+
+      QMetaMethod processMessage = Relay::staticMetaObject.method(processMessageIndex);
+      return processMessage;
+   }();
 
    static Bytes buffer;
    auto maybeProcessBuffer = [&]()
@@ -125,10 +131,10 @@ void Midi::RtMidi::Input::midiReceive(double timeStamp, std::vector<unsigned cha
    maybeProcessBuffer();
 }
 
-void Midi::RtMidi::Input::prcocessMessage(const Bytes& message)
+void Midi::RtMidi::Input::processMessage(const Bytes& message)
 {
    for (Interface::Output* passthrough : passthroughList)
       passthrough->sendBuffer(message);
 
-   Interface::Input::prcocessMessage(message);
+   Interface::Input::processMessage(message);
 }
