@@ -113,9 +113,7 @@ void Midi::RtMidi::Input::midiReceive(double timeStamp, std::vector<unsigned cha
       if (0 == buffer.size())
          return;
 
-      if (processMessage.isConst())
-         processMessage.invoke(&me->relay, Qt::QueuedConnection, Q_ARG(Bytes, buffer));
-
+      processMessage.invoke(&me->relay, Qt::QueuedConnection, Q_ARG(Bytes, buffer));
       buffer.clear();
    };
 
