@@ -31,7 +31,6 @@ void Midi::Physical::Input::open()
    {
       input.openPort(portNumber);
 
-
       qInfo() << "opened midi input port" << portNumber;
    }
    else
@@ -47,4 +46,9 @@ void Midi::Physical::Input::close()
 
    input.closePort();
    qInfo() << "closed midi input port";
+}
+
+bool Midi::Physical::Input::isOpen() const
+{
+   return input.isPortOpen();
 }
